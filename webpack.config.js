@@ -129,6 +129,12 @@ module.exports = [
                 }
             ])
         },
+        watchOptions: {
+            ignored: [
+                /node_modules([\\]+|\/)+(?!scratch-vm)/,
+                /\scratch-vm([\\]+|\/)node_modules/
+            ]
+        },
         optimization: {
             splitChunks: {
                 chunks: 'all',

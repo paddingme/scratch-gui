@@ -72,6 +72,11 @@ import languageIcon from '../language-selector/language-icon.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
+import greenIndicatorIcon from './icon--indicator_green.svg';
+import orangeIndicatorIcon from './icon--indicator_orange.svg';
+import redIndicatorIcon from './icon--indicator_red.svg';
+const io = require('socket.io-client');
+
 import sharedMessages from '../../lib/shared-messages';
 
 const ariaMessages = defineMessages({
@@ -321,15 +326,19 @@ class MenuBar extends React.Component {
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
                         <div className={classNames(styles.menuBarItem)}>
-                            <img
-                                alt="Scratch"
-                                className={classNames(styles.scratchLogo, {
-                                    [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
-                                })}
-                                draggable={false}
-                                src={scratchLogo}
-                                onClick={this.props.onClickLogo}
-                            />
+                            <a
+                                href="https://x.padding.me/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                <img
+                                style={{height: '45px'}}
+                                    alt="Scratch"
+                                    className={styles.scratchLogo}
+                                    draggable={false}
+                                    src={scratchLogo}
+                                />
+                            </a>
                         </div>
                         <div
                             className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
@@ -642,8 +651,37 @@ class MenuBar extends React.Component {
                     ) : (
                         // ******** no login session is available, so don't show login stuff
                         <React.Fragment>
+                            <div className={classNames(styles.menuBarItem, styles.feedbackButtonWrapper)}>
+                                <a
+                                    className={styles.feedbackLink}
+                                    href="https://jinshuju.net/f/cXRDXK"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    <Button
+                                        className={styles.feedbackButton}
+                                    >
+                                        <FormattedMessage
+                                            defaultMessage="Give Feedback"
+                                            description="Label for feedback form modal button"
+                                            id="gui.menuBar.giveFeedback"
+                                        />
+                                    </Button>
+                                </a>
+                            </div>
                             {this.props.showComingSoon ? (
                                 <React.Fragment>
+                                    <div
+                                        aria-label="Connect to Bluetooth"
+                                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                                        onClick={this.props.onScanBluetooth}
+                                    >
+                                        <img
+                                            className={styles.indicatorIcon}
+                                            src={orangeIndicatorIcon}
+                                            id="gui.menuBar.bluetoothIndicator"
+                                        />
+                                    </div>
                                     <MenuBarItemTooltip id="mystuff">
                                         <div
                                             className={classNames(
@@ -795,6 +833,41 @@ const mapDispatchToProps = dispatch => ({
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true))
 });
+
+const url = new URL(window.location.href);
+let adapterHost;
+let socketio;
+
+adapterHost = url.searchParams.get('adapter_host');
+if (!adapterHost) {
+    adapterHost = 'codelab-adapter.codelab.club';
+}
+
+socketio = io(`//${adapterHost}:12358/test`, {
+    transports: ['websocket']
+});
+let socketState = false;
+
+socketio.on('connect', () => {
+    socketState = true;
+    console.log('socket连接成功');
+});
+socketio.on('connect_error', () => {
+    socketState = false;
+});
+socketio.on('disconnect', () => {
+    socketState = false;
+
+});
+
+setInterval(() => {
+    let bluetoothIndicator = document.getElementById('gui.menuBar.bluetoothIndicator')
+    if (socketState) {
+        bluetoothIndicator && (bluetoothIndicator.src = greenIndicatorIcon);
+    } else {
+        bluetoothIndicator && (bluetoothIndicator.src = redIndicatorIcon);
+    }
+}, 1000);
 
 export default compose(
     injectIntl,

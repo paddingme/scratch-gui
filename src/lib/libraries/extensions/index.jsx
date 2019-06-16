@@ -166,36 +166,36 @@ export default [
         ),
         featured: true
     },
-    {
-        name: 'micro:bit',
-        extensionId: 'microbit',
-        collaborator: 'micro:bit',
-        iconURL: microbitIconURL,
-        insetIconURL: microbitInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Connect your projects with the world."
-                description="Description for the 'micro:bit' extension"
-                id="gui.extension.microbit.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: true,
-        internetConnectionRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their micro:bit."
-                id="gui.extension.microbit.connectingMessage"
-            />
-        ),
-        helpLink: 'https://scratch.mit.edu/microbit'
-    },
+    // {
+    //     name: 'micro:bit',
+    //     extensionId: 'microbit',
+    //     collaborator: 'micro:bit',
+    //     iconURL: microbitIconURL,
+    //     insetIconURL: microbitInsetIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="Connect your projects with the world."
+    //             description="Description for the 'micro:bit' extension"
+    //             id="gui.extension.microbit.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: false,
+    //     bluetoothRequired: true, // 是否需要开蓝牙
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: true,
+    //     connectionIconURL: microbitConnectionIconURL,
+    //     connectionSmallIconURL: microbitConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their micro:bit."
+    //             id="gui.extension.microbit.connectingMessage"
+    //         />
+    //     ),
+    //     helpLink: 'https://scratch.mit.edu/microbit'
+    // },
     {
         name: 'LEGO MINDSTORMS EV3',
         extensionId: 'ev3',
@@ -317,5 +317,26 @@ export default [
             />
         ),
         helpLink: 'https://scratch.mit.edu/vernier'
-    }
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="usb microbit"
+                description="Name for the 'usb microbit' extension"
+                id="gui.extension.usbMicrobit.name"
+            />
+        ),
+        extensionId: 'usbMicrobit',
+        collaborator: 'scratch3-adapter',
+        iconURL: microbitIconURL,
+        insetIconURL: microbitInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="usb microbit"
+                description="Description for the 'usb microbit' extension"
+                id="gui.extension.usbMicrobit.description"
+            />
+        ),
+        featured: true
+    },
 ];

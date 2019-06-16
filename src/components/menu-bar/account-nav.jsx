@@ -14,6 +14,9 @@ import {MenuSection} from '../menu/menu.jsx';
 import MenuItemContainer from '../../containers/menu-item.jsx';
 import UserAvatar from './user-avatar.jsx';
 import dropdownCaret from './dropdown-caret.svg';
+import greenIndicatorIcon from './icon--indicator_green.svg';
+import orangeIndicatorIcon from './icon--indicator_orange.svg';
+import redIndicatorIcon from './icon--indicator_red.svg';
 
 import styles from './account-nav.css';
 
@@ -71,6 +74,17 @@ const AccountNavComponent = ({
                     id="gui.accountMenu.profile"
                 />
             </MenuItemContainer>
+            <div
+                                        aria-label="Connect to Bluetooth"
+                                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                                        onClick={this.props.onScanBluetooth}
+                                    >
+                                        <img
+                                            className={styles.indicatorIcon}
+                                            src={orangeIndicatorIcon}
+                                            id="gui.menuBar.bluetoothIndicator"
+                                        />
+                                    </div>
             <MenuItemContainer href="/mystuff/">
                 <FormattedMessage
                     defaultMessage="My Stuff"
